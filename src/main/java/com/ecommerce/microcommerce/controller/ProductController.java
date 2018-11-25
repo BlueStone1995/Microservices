@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class ProductController {
 
     // Post Product
     @PostMapping(value = "/Produits")
-    public ResponseEntity<Void> addProduct(@RequestBody Product product) {
+    public ResponseEntity<Void> addProduct(@Valid @RequestBody Product product) {
         Product productSend = productDao.save(product);
 
         if (product == null) {
