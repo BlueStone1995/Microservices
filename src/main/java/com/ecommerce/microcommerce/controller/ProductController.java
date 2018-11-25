@@ -1,6 +1,7 @@
 package com.ecommerce.microcommerce.controller;
 
 import com.ecommerce.microcommerce.dao.ProductDao;
+import com.ecommerce.microcommerce.exceptions.ProductNotFindException;
 import com.ecommerce.microcommerce.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,13 @@ public class ProductController {
 
     // Produits/{id}
     @GetMapping(value = "Produits/{id}")
-    public Product getProduit(@PathVariable int id) {
-        return productDao.findById(id);
+    public Product getProduit(@PathVariable int id) throws ProductNotFindException {
+
+        Product product = productDao.findById(id);
+
+        if (product == null) throw new ProductNotFindException("Product " + id + " not found... ");
+
+        return product;
     }
 
     // Post Product
